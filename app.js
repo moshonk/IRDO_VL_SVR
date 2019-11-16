@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var indexRouter = require('./routes/index');
 var tokenRouter = require('./routes/token');
 var vlOnlineRouter = require('./routes/vlOnline');
 
@@ -19,8 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', indexRouter);
 app.use('/token', tokenRouter);
-
 app.use('/vlOnline', vlOnlineRouter);
 
 // catch 404 and forward to error handler

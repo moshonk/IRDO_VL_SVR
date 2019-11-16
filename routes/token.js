@@ -28,7 +28,7 @@ router.get('/', cors(), function (req, res, next) {
 function getCachedAuthenticationToken() {
     
     //var token = mycache.get('token');
-    var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkubmFzY29wLm9yZ1wvYXV0aFwvdmVyMi4wXC9sb2dpbiIsImlhdCI6MTU3MzY0MjA2NCwiZXhwIjoxNTczNjQ1NjY0LCJuYmYiOjE1NzM2NDIwNjQsImp0aSI6IkNwZW5Gbkh1UDE0WnQ3R1MiLCJzdWIiOjEwLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.9vfplDLEouyzD1zItiGrE7jDjKOFAlaukXvmRQUb5_0';
+    var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkubmFzY29wLm9yZ1wvYXV0aFwvdmVyMi4wXC9sb2dpbiIsImlhdCI6MTU3MzY0NjczNywiZXhwIjoxNTczNjUwMzM3LCJuYmYiOjE1NzM2NDY3MzcsImp0aSI6IktqNUEyOGxOdzdsVlJ2VkMiLCJzdWIiOjEwLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.FwRonXSOzkp1K_QFnCnhWyHGXNfUT-UcJWRYzUvlOeA';
     return token;
 }
 

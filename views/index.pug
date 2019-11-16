@@ -2,4 +2,37 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+
+  form(method='GET', action='/vlOnline')
+    fieldset.field-set
+        legend.legend Search for VL Results below
+
+        div.form-group.col-md-6
+          label(for='facility') Facility: 
+          select(name='facility', id='facility')
+            option(value='') Select
+            each facility in facilities
+              option(value=facility.mfl) #{facility.name} (#{facility.mfl})
+
+        div.form-group.col-md-6
+          label(for="ccc-number") CCC Number: 
+          input(type='text', name='ccc-number', id='ccc-number', class='input',value='1810900028')
+
+        div.form-group.col-md-6
+          input#search.input(type="button", name="search", value="Search")
+
+  div.row
+    div.col-md-12
+      div#message.alert.alert-warning
+
+  div.row
+    div.col-md-12
+      table.table.table-stripped
+        thead
+          th CCC Number
+          th VL Date
+          th VL Result
+        trow
+          td 1234
+          td 2019-01-01
+          td LDL
