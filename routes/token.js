@@ -8,13 +8,15 @@ var cors = require('cors');
 /* GET Authentication Token */
 router.get('/', cors(), function (req, res, next) {
 
-    let token = getCachedAuthenticationToken();
-    if (token == undefined) {
+    let token = req.cookies.authToken; //Fetch the authentication Token from cookies
+    
+    if (token == undefined || token == null) {
         data = { 'email': 'moses.wabwile@impact-rdo.org', 'password': 's8p1ql4fkeyrzJwK' };
         request.post({ url: 'https://api.nascop.org/auth/ver2.0/login', form: data }, function (err, httpResponse, body) {
-            if (body.status == 'ok' && body.data.error == undefined) {
-                mycache.set('token', body.token, 21500); //ttl of 6 hours
-                res.send({status: 'ok', token: body.data});
+            body = JSON.parse(body);
+            if (body.status == 'ok' && (err == null || body.data.error == undefined)) {
+                res.cookie('authToken', body.token, {expire: 43200 + Date.now()}); // Set Authentication Token cookie cookie to expire after 12 hours
+                res.send({status: 'ok', token: body.token});
             } else {
                 res.send({status: 'fail', message: body.data.error.message});
             }
@@ -24,12 +26,5 @@ router.get('/', cors(), function (req, res, next) {
     }
 
 });
-
-function getCachedAuthenticationToken() {
-    
-    //var token = mycache.get('token');
-    var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkubmFzY29wLm9yZ1wvYXV0aFwvdmVyMi4wXC9sb2dpbiIsImlhdCI6MTU3MzY0NjczNywiZXhwIjoxNTczNjUwMzM3LCJuYmYiOjE1NzM2NDY3MzcsImp0aSI6IktqNUEyOGxOdzdsVlJ2VkMiLCJzdWIiOjEwLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.FwRonXSOzkp1K_QFnCnhWyHGXNfUT-UcJWRYzUvlOeA';
-    return token;
-}
 
 module.exports = router;

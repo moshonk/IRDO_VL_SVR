@@ -23,14 +23,14 @@ router.get('/', cors(), function (req, res, next) {
     authUtil.getToken().then(function (r) {
         let token = r.token;
         request.get(uri, {auth: {bearer: token}}, function (err, httpResponse, body) {
-
+            let returnMessage = {};
             if ( err == null && body.error == undefined) {
-                res.send({status: 'ok', data: body});
+                returnMessage = {status: 'ok', data: body};
             } else {
-                res.send({status: 'fail', data: body});
-                console.log(err);
-                console.log(body);
+                let errMsg = `Code: ${err.code} ${err.syscall} (${err.hostname})`;
+                returnMessage = {status: 'fail', data: errMsg};
             }
+            res.send(returnMessage);
         });    
     });
 });
