@@ -5,7 +5,7 @@ $().ready(function () {
     let $table = $('table#vl-results')
 
     var searchVlResults = (mflcode, cccnumber) => {
-        let uri = `http://localhost:50001/vlOnline?mflcode=${mflcode}&cccNumber=${cccnumber}`;
+        let uri = `/vlOnline?mflcode=${mflcode}&cccNumber=${cccnumber}`;
         $.ajax({
             url: uri,
             type: "GET",
@@ -64,6 +64,59 @@ $().ready(function () {
         $table.DataTable();
     }
 
+    $('#facility').select2({
+        ajax: {
+            url: '/facility',
+            type: 'GET',
+            dataType: 'json',
+            delay: 1000,
+            data: (params) => {
+                return { searchTerm: params.term }
+            },
+            processResults: function (response) {
+                var facilities = response.map((f) => {
+                    return {id: f.facilityMFLCode,
+                            name: f.facilityMFLCode,
+                            text: `${f.facility} (${f.facilityMFLCode})`}
+                });
+                return {
+                    results: facilities
+                }
+                
+            },
+           cache: true
+        },
+        minimumInputLength: 3
+    })
+
+    /*
+    $('#facility1').select2({
+        theme: 'bootstrap4',
+        width: 'style',
+        query: function (data) {
+            var pageSize,
+                    dataset,
+                    that = this;
+            pageSize = 20; // Number of the option loads at a time
+            results = [];
+            if (data.term && data.term !== '') {
+                // HEADS UP; for the _.filter function I use underscore (actually lo-dash) here
+                results = _.filter(that.data, function (e) {
+                    return e.text.toUpperCase().indexOf(data.term.toUpperCase()) >= 0;
+                });
+            } else if (data.term === '') {
+                results = that.data;
+            }
+            data.callback({
+                results: results.slice((data.page - 1) * pageSize, data.page * pageSize),
+                more: results.length >= data.page * pageSize,
+            });
+        },
+        placeholder: $(this).attr('placeholder'),
+        allowClear: Boolean($(this).data('allow-clear')),
+    });
+    */
+
     $('#search').click(() => {
         let mflcode = $('#facility').val();
         let cccnumber = $('#ccc-number').val();
@@ -87,6 +140,8 @@ $().ready(function () {
     });
 
     showValidationMessage('');
+
+    // populateFacilities();
 
     $table.DataTable();
     

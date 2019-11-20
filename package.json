@@ -15,6 +15,7 @@
     "node-cache": "^5.0.1",
     "pug": "^2.0.4",
     "request": "^2.88.0",
-    "response": "^0.18.0"
+    "response": "^0.18.0",
+    "stream-browserify": "^2.0.2"
   }
 }

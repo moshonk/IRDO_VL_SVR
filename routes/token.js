@@ -2,7 +2,6 @@ var express = require('express');
 var request = require('request');
 var nodecache = require('node-cache');
 var router = express.Router();
-var mycache = new nodecache();
 var cors = require('cors');
 
 /* GET Authentication Token */
